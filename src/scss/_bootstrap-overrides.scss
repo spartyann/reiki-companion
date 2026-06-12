@@ -2,9 +2,13 @@
 // Bootstrap uses !default on all vars, so toute variable définie ici prend la priorité.
 // Référence complète : node_modules/bootstrap/scss/_variables.scss
 
+// Typography
+$font-family-sans-serif:  'Nunito', sans-serif;
+$headings-font-family:    'Bona Nova', serif;
+
 // Colors
-$primary:   #31d53d;
-$secondary: #2c3e50;
+$primary:   #1a6b6b;
+$secondary: #4b3f9e;
 
 // Border radius
 $border-radius-sm:  4px;

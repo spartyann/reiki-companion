@@ -2,7 +2,7 @@
   <div class="app">
     <h1>{{ title }}</h1>
     <p>Bienvenue dans ton app Reiki</p>
-    <button @click="count++">Clics : {{ count }}</button>
+    <button class="btn btn-primary" @click="count++">Clics : {{ count }}</button>
   </div>
 </template>
 
