@@ -1,0 +1,68 @@
+.music-picker__list {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.music-picker__empty {
+  padding: $spacing-sm $spacing-md;
+  font-family: 'Nunito', sans-serif;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+.music-picker__item {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  background: #fff;
+  border: 2px solid #e5e7eb;
+  border-radius: $radius-md;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-family: 'Nunito', sans-serif;
+  font-size: $font-size-base;
+  color: $color-text;
+  transition: border-color 0.15s ease;
+
+  &--selected {
+    border-color: $color-primary;
+    background: #f0fdf4;
+  }
+
+  &--upload {
+    border-style: dashed;
+    color: $color-text-muted;
+  }
+
+  &:hover:not(.music-picker__item--selected) {
+    border-color: #d1d5db;
+  }
+}
+
+.music-picker__item-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.music-picker__item-name {
+  flex: 1;
+  font-weight: 600;
+}
+
+.music-picker__preview {
+  background: none;
+  border: none;
+  font-size: 0.75rem;
+  color: $color-primary;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: $radius-sm;
+
+  &:hover {
+    background: #dcfce7;
+  }
+}

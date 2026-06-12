@@ -1,0 +1,188 @@
+.music-session {
+	min-height: 100vh;
+	background: #fafafa;
+	display: flex;
+	flex-direction: column;
+}
+
+.music-session__main {
+	flex: 1;
+	padding: $spacing-lg;
+	max-width: 600px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.music-session__empty {
+	text-align: center;
+	padding: $spacing-xl $spacing-lg;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $spacing-md;
+}
+
+.music-session__empty-icon {
+	font-size: 4rem;
+}
+
+.music-session__empty-title {
+	font-family: 'Bona Nova', serif;
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: $color-secondary;
+	margin: 0;
+}
+
+.music-session__empty-sub {
+	font-family: 'Nunito', sans-serif;
+	font-size: $font-size-base;
+	color: $color-text-muted;
+	max-width: 300px;
+	margin: 0;
+	line-height: 1.6;
+}
+
+.music-session__create-btn {
+	padding: 12px $spacing-xl;
+	background: $color-primary;
+	color: #fff;
+	border: none;
+	border-radius: $radius-full;
+	font-family: 'Nunito', sans-serif;
+	font-size: $font-size-base;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background 0.2s;
+
+	&:hover {
+		background: $color-primary-dark;
+	}
+}
+
+.music-session__list {
+	display: flex;
+	flex-direction: column;
+	gap: $spacing-md;
+}
+
+.music-session__fab {
+	position: fixed;
+	bottom: $spacing-xl;
+	right: $spacing-xl;
+	width: 56px;
+	height: 56px;
+	background: $color-primary;
+	color: #fff;
+	border: none;
+	border-radius: 50%;
+	font-size: 1.75rem;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+	transition: background 0.2s, transform 0.1s;
+
+	&:hover {
+		background: $color-primary-dark;
+	}
+
+	&:active {
+		transform: scale(0.93);
+	}
+}
+
+.music-session__overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+}
+
+.music-session__overlay-card {
+	background: #fff;
+	border-radius: $radius-lg;
+	padding: $spacing-xl;
+	max-width: 320px;
+	width: 90%;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $spacing-md;
+}
+
+.music-session__overlay-spinner {
+	width: 40px;
+	height: 40px;
+	border: 3px solid #dcfce7;
+	border-top-color: $color-primary;
+	border-radius: 50%;
+	animation: music-session-spin 0.8s linear infinite;
+}
+
+.music-session__overlay-title {
+	font-family: 'Bona Nova', serif;
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: $color-secondary;
+	margin: 0;
+}
+
+.music-session__overlay-sub {
+	font-family: 'Nunito', sans-serif;
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: $color-primary;
+	margin: 0;
+}
+
+.music-session__progress {
+	width: 100%;
+	height: 6px;
+	background: #e5e7eb;
+	border-radius: $radius-full;
+	overflow: hidden;
+}
+
+.music-session__progress-bar {
+	height: 100%;
+	background: $color-primary;
+	transition: width 0.3s ease;
+}
+
+.music-session__overlay-hint {
+	font-family: 'Nunito', sans-serif;
+	font-size: $font-size-sm;
+	color: $color-text-muted;
+	margin: 0;
+}
+
+.music-session__toast {
+	position: fixed;
+	bottom: $spacing-lg;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: $spacing-sm $spacing-md;
+	border-radius: $radius-lg;
+	font-family: 'Nunito', sans-serif;
+	font-size: $font-size-sm;
+	font-weight: 600;
+	white-space: nowrap;
+	z-index: 200;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+	&--error {
+		background: #fef2f2;
+		color: #dc2626;
+		border: 1px solid #fecaca;
+	}
+}
+
+@keyframes music-session-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}

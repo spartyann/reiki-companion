@@ -24,27 +24,4 @@ const formattedSize = computed(() => {
 const isHigh = computed(() => props.bytes > 200 * 1024 * 1024)
 </script>
 
-<style scoped lang="scss">
-.storage-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: $spacing-xs;
-  padding: 6px $spacing-sm;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  border-radius: $radius-full;
-  font-family: 'Nunito', sans-serif;
-  font-size: $font-size-sm;
-  color: #166534;
-
-  &--warning {
-    background: #fefce8;
-    border-color: #fde68a;
-    color: #92400e;
-  }
-}
-
-.storage-indicator__icon {
-  font-size: 0.875rem;
-}
-</style>
+<style src="../../scss/components/music/storage-indicator.scss" scoped lang="scss" />
