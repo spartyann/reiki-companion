@@ -14,6 +14,10 @@ export default defineConfig({
     minify: false,
     emptyOutDir: true,
   },
+  server: {
+    port: 3000,
+	host: true   // équivalent de 0.0.0.0
+  },
   css: {
     preprocessorOptions: {
       scss: {

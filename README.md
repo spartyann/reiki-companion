@@ -10,3 +10,9 @@ To run the provided example, you can use `npm start` command.
 ```bash
 npm start
 ```
+
+
+npm run start
+adb reverse tcp:3000 tcp:3000
+npx cap run android --target e8089e6b --live-reload --host=localhost
+

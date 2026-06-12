@@ -6,11 +6,6 @@
     "backgroundColor": "#1a1a2e"
   },
   "plugins": {
-    "SplashScreen": {
-      "launchAutoHide": false
-    },
-	"Filesystem": {
-      "androidScheme": "https"
-    }
+    
   }
 }
