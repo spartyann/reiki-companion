@@ -1,0 +1,5 @@
+// 1. Overrides d'abord — Bootstrap utilise !default, donc nos valeurs gagnent
+@import 'bootstrap-overrides';
+
+// 2. Bootstrap complet
+@import 'bootstrap/scss/bootstrap';

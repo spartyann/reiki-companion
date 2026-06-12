@@ -17,10 +17,10 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `
-          @use '${scssDir}/variables' as *;
-          @use '${scssDir}/mixins' as *;
-        `,
+        additionalData: (source: string, filename: string) => {
+          if (filename.includes('node_modules')) return source;
+          return `@use '${scssDir}/variables' as *;\n@use '${scssDir}/mixins' as *;\n${source}`;
+        },
       },
     },
   },
