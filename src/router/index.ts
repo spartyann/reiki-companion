@@ -34,6 +34,11 @@ const router = createRouter({
       name: 'music-edit',
       component: () => import('../views/music/ThemeFormView.vue'),
     },
+    {
+      path: '/music/:id/play',
+      name: 'music-play',
+      component: () => import('../views/music/SessionPlayerView.vue'),
+    },
   ],
 })
 

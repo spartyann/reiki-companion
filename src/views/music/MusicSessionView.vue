@@ -25,6 +25,7 @@
           :theme="theme"
           :is-generating="generatingId === theme.id"
           :generate-progress="generateProgress"
+          @play="router.push({ name: 'music-play', params: { id: $event } })"
           @generate="handleGenerate"
           @edit="router.push({ name: 'music-edit', params: { id: $event } })"
           @delete="handleDelete"

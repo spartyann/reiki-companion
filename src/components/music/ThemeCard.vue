@@ -28,6 +28,15 @@
 
     <div class="theme-card__actions">
       <button
+        v-if="theme.generatedAudioPath"
+        class="theme-card__btn theme-card__btn--play"
+        :disabled="isGenerating"
+        @click="emit('play', theme.id)"
+      >
+        ▶ Jouer
+      </button>
+
+      <button
         class="theme-card__btn theme-card__btn--generate"
         :disabled="isGenerating"
         @click="emit('generate', theme.id)"
@@ -36,12 +45,12 @@
           <span class="theme-card__spinner" /> {{ generateProgress }}%
         </span>
         <span v-else>
-          {{ theme.generatedAudioPath ? '↺ Regénérer' : '⚡ Générer l\'audio' }}
+          {{ theme.generatedAudioPath ? '↺' : '⚡ Générer' }}
         </span>
       </button>
 
       <button class="theme-card__btn theme-card__btn--edit" @click="emit('edit', theme.id)">
-        ✏️ Modifier
+        ✏️
       </button>
 
       <button class="theme-card__btn theme-card__btn--delete" @click="emit('delete', theme.id)">
@@ -63,6 +72,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
+  play: [id: string]
   generate: [id: string]
   edit: [id: string]
   delete: [id: string]
