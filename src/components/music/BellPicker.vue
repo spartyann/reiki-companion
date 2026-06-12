@@ -1,30 +1,36 @@
 <template>
   <div class="bell-picker">
     <div class="bell-picker__list">
-      <button
+      <div
         v-for="asset in BELL_ASSETS"
         :key="asset.id"
-        type="button"
         class="bell-picker__item"
         :class="{ 'bell-picker__item--selected': modelValue === asset.id }"
+        role="radio"
+        :aria-checked="modelValue === asset.id"
+        tabindex="0"
         @click="select(asset.id)"
+        @keydown.enter.space.prevent="select(asset.id)"
       >
         <span class="bell-picker__item-icon">🔔</span>
         <span class="bell-picker__item-name">{{ asset.name }}</span>
         <button type="button" class="bell-picker__preview" title="Écouter" @click.stop="preview(asset)">
           ▶
         </button>
-      </button>
+      </div>
 
-      <button
-        type="button"
+      <div
         class="bell-picker__item"
         :class="{ 'bell-picker__item--selected': modelValue === 'custom' }"
+        role="radio"
+        :aria-checked="modelValue === 'custom'"
+        tabindex="0"
         @click="triggerUpload"
+        @keydown.enter.space.prevent="triggerUpload"
       >
         <span class="bell-picker__item-icon">📁</span>
         <span class="bell-picker__item-name">{{ customName ?? 'Importer un fichier…' }}</span>
-      </button>
+      </div>
     </div>
 
     <input

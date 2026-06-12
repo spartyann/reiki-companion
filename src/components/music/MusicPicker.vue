@@ -1,30 +1,36 @@
 <template>
   <div class="music-picker">
     <div class="music-picker__list">
-      <button
-        type="button"
+      <div
         class="music-picker__item"
         :class="{ 'music-picker__item--selected': modelValue === null }"
+        role="radio"
+        :aria-checked="modelValue === null"
+        tabindex="0"
         @click="emit('update:modelValue', null)"
+        @keydown.enter.space.prevent="emit('update:modelValue', null)"
       >
         <span class="music-picker__item-icon">🔇</span>
         <span class="music-picker__item-name">Aucune musique</span>
-      </button>
+      </div>
 
-      <button
+      <div
         v-for="asset in MUSIC_ASSETS"
         :key="asset.id"
-        type="button"
         class="music-picker__item"
         :class="{ 'music-picker__item--selected': modelValue === asset.id }"
+        role="radio"
+        :aria-checked="modelValue === asset.id"
+        tabindex="0"
         @click="select(asset.id)"
+        @keydown.enter.space.prevent="select(asset.id)"
       >
         <span class="music-picker__item-icon">🎵</span>
         <span class="music-picker__item-name">{{ asset.name }}</span>
         <button type="button" class="music-picker__preview" title="Écouter" @click.stop="preview(asset)">
           ▶
         </button>
-      </button>
+      </div>
 
       <div v-if="MUSIC_ASSETS.length === 0" class="music-picker__empty">
         Aucune musique prédéfinie pour l'instant
