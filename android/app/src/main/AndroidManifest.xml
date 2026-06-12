@@ -37,5 +37,18 @@
 
     <!-- Permissions -->
 
+    <!-- ── Réseau (téléchargement packs musique) ── -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- ── Lecture audio arrière-plan (OBLIGATOIRE Android 14+) ── -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- ── Stockage (import MP3 utilisateur + packs téléchargés) ── -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <!-- Android 13+ : permission granulaire -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
 </manifest>

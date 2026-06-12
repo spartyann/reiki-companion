@@ -4,4 +4,9 @@
     <string name="title_activity_main">reiki-companion</string>
     <string name="package_name">fr.yanntassy.reikicompanion</string>
     <string name="custom_url_scheme">fr.yanntassy.reikicompanion</string>
+
+	<!-- Description affichée dans Paramètres > Applis > Reiki Compagnon -->
+    <string name="audio_player_service_description">
+        Permet la lecture audio en arrière-plan pendant les sessions de Reiki.
+    </string>
 </resources>
