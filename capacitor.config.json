@@ -1,0 +1,10 @@
+{
+  "appId": "fr.yanntassy.reikicompanion",
+  "appName": "reiki-companion",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false
+    }
+  }
+}
