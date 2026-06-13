@@ -1,9 +1,10 @@
 <template>
-  <div class="storage-indicator" :class="{ 'storage-indicator--warning': isHigh }">
-    <span class="storage-indicator__icon">💾</span>
-    <span class="storage-indicator__text">
-      Stockage audio : <strong>{{ formattedSize }}</strong>
-    </span>
+  <div
+    class="d-inline-flex align-items-center gap-1 px-2 py-1 rounded-pill storage-indicator"
+    :class="isHigh ? 'storage-indicator--warn' : 'storage-indicator--ok'"
+  >
+    <span style="font-size: 0.875rem">💾</span>
+    <span style="font-size: 0.75rem">Stockage : <strong>{{ formattedSize }}</strong></span>
   </div>
 </template>
 
@@ -24,4 +25,15 @@ const formattedSize = computed(() => {
 const isHigh = computed(() => props.bytes > 200 * 1024 * 1024)
 </script>
 
-<style src="../../scss/components/music/storage-indicator.scss" scoped lang="scss" />
+<style scoped>
+.storage-indicator--ok {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+.storage-indicator--warn {
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  color: #92400e;
+}
+</style>

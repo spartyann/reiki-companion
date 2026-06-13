@@ -1,36 +1,34 @@
 <template>
-  <div class="bell-picker">
-    <div class="bell-picker__list">
-      <div
-        v-for="asset in BELL_ASSETS"
-        :key="asset.id"
-        class="bell-picker__item"
-        :class="{ 'bell-picker__item--selected': modelValue === asset.id }"
-        role="radio"
-        :aria-checked="modelValue === asset.id"
-        tabindex="0"
-        @click="select(asset.id)"
-        @keydown.enter.space.prevent="select(asset.id)"
-      >
-        <span class="bell-picker__item-icon">🔔</span>
-        <span class="bell-picker__item-name">{{ asset.name }}</span>
-        <button type="button" class="bell-picker__preview" title="Écouter" @click.stop="preview(asset)">
-          ▶
-        </button>
-      </div>
+  <div class="d-flex flex-column gap-2">
+    <div
+      v-for="asset in BELL_ASSETS"
+      :key="asset.id"
+      class="picker-item d-flex align-items-center gap-2 px-3 py-2 w-100"
+      :class="{ 'picker-item--selected': modelValue === asset.id }"
+      role="radio"
+      :aria-checked="modelValue === asset.id"
+      tabindex="0"
+      @click="select(asset.id)"
+      @keydown.enter.space.prevent="select(asset.id)"
+    >
+      <span class="picker-item__icon">🔔</span>
+      <span class="flex-grow-1 fw-semibold">{{ asset.name }}</span>
+      <button type="button" class="btn btn-link btn-sm p-1 picker-preview" title="Écouter" @click.stop="preview(asset)">
+        ▶
+      </button>
+    </div>
 
-      <div
-        class="bell-picker__item"
-        :class="{ 'bell-picker__item--selected': modelValue === 'custom' }"
-        role="radio"
-        :aria-checked="modelValue === 'custom'"
-        tabindex="0"
-        @click="triggerUpload"
-        @keydown.enter.space.prevent="triggerUpload"
-      >
-        <span class="bell-picker__item-icon">📁</span>
-        <span class="bell-picker__item-name">{{ customName ?? 'Importer un fichier…' }}</span>
-      </div>
+    <div
+      class="picker-item d-flex align-items-center gap-2 px-3 py-2 w-100"
+      :class="{ 'picker-item--selected': modelValue === 'custom' }"
+      role="radio"
+      :aria-checked="modelValue === 'custom'"
+      tabindex="0"
+      @click="triggerUpload"
+      @keydown.enter.space.prevent="triggerUpload"
+    >
+      <span class="picker-item__icon">📁</span>
+      <span class="flex-grow-1 fw-semibold text-muted">{{ customName ?? 'Importer un fichier…' }}</span>
     </div>
 
     <input
@@ -86,4 +84,36 @@ function onFileChange(e: Event) {
 }
 </script>
 
-<style src="../../scss/components/music/bell-picker.scss" scoped lang="scss" />
+<style scoped lang="scss">
+.picker-item {
+  background: #fff;
+  border: 2px solid #e5e7eb;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+
+  &--selected {
+    border-color: $color-primary;
+    background: #f0fdf4;
+  }
+
+  &:hover:not(.picker-item--selected) {
+    border-color: #d1d5db;
+  }
+}
+
+.picker-item__icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.picker-preview {
+  color: $color-primary;
+  text-decoration: none;
+
+  &:hover {
+    background: #dcfce7;
+    border-radius: $radius-sm;
+  }
+}
+</style>

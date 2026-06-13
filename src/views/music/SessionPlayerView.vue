@@ -1,16 +1,14 @@
 <template>
-  <div class="session-player">
+  <div class="session-player min-vh-100 d-flex flex-column">
     <AppHeader :title="theme?.name ?? 'Séance'" :show-back="!isPlaying" />
 
-    <main class="session-player__main">
+    <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center p-4 gap-5">
       <!-- Audio non généré -->
-      <div v-if="!theme?.generatedAudioPath" class="session-player__no-audio">
-        <div class="session-player__no-audio-icon">⚠️</div>
-        <p class="session-player__no-audio-title">Audio non généré</p>
-        <p class="session-player__no-audio-sub">
-          Générez l'audio du thème avant de lancer la séance.
-        </p>
-        <button class="session-player__back-btn" @click="router.back()">
+      <div v-if="!theme?.generatedAudioPath" class="text-center d-flex flex-column align-items-center gap-4">
+        <div style="font-size: 3.5rem">⚠️</div>
+        <p class="h5 fw-bold text-secondary mb-0">Audio non généré</p>
+        <p class="text-muted mb-0">Générez l'audio du thème avant de lancer la séance.</p>
+        <button class="btn btn-primary rounded-pill fw-bold px-5 py-2" @click="router.back()">
           ← Retour
         </button>
       </div>
@@ -18,57 +16,58 @@
       <!-- Lecteur -->
       <template v-else>
         <!-- Anneaux de pulse -->
-        <div class="session-player__pulse-ring">
+        <div class="pulse-ring">
           <div
-            class="session-player__pulse-wave"
-            :class="{ 'session-player__pulse-wave--active': isPlaying }"
+            class="pulse-wave"
+            :class="{ 'pulse-wave--active': isPlaying }"
           />
           <div
-            class="session-player__pulse-wave"
-            :class="{ 'session-player__pulse-wave--active': isPlaying }"
+            class="pulse-wave"
+            :class="{ 'pulse-wave--active': isPlaying }"
           />
           <div
-            class="session-player__pulse-wave"
-            :class="{ 'session-player__pulse-wave--active': isPlaying }"
+            class="pulse-wave"
+            :class="{ 'pulse-wave--active': isPlaying }"
           />
           <div
-            class="session-player__pulse-center"
-            :class="{ 'session-player__pulse-center--bell': bellFlash }"
+            class="pulse-center"
+            :class="{ 'pulse-center--bell': bellFlash }"
           >
             🔔
           </div>
         </div>
 
         <!-- Minuteur -->
-        <div class="session-player__timer">
-          <div class="session-player__time-elapsed">{{ formatTime(currentTime) }}</div>
-          <div class="session-player__time-remaining">
+        <div class="text-center">
+          <div class="timer-elapsed">{{ formatTime(currentTime) }}</div>
+          <div class="text-muted small mt-1">
             {{ formatTime(totalDuration - currentTime) }} restantes
           </div>
         </div>
 
         <!-- Barre de progression -->
-        <div class="session-player__progress-wrap">
-          <div class="session-player__progress-track">
+        <div class="w-100" style="max-width: 320px">
+          <div class="progress" style="height: 6px; background: rgba(49,213,61,0.2)">
             <div
-              class="session-player__progress-fill"
+              class="progress-bar bg-primary"
+              role="progressbar"
               :style="{ width: progress + '%' }"
             />
           </div>
         </div>
 
         <!-- Info chips -->
-        <div class="session-player__info">
-          <span class="session-player__chip">🔔 {{ bellsRung }} sonnerie{{ bellsRung !== 1 ? 's' : '' }}</span>
-          <span v-if="theme.musicAssetId" class="session-player__chip">🎵 Musique active</span>
+        <div class="d-flex gap-2 flex-wrap justify-content-center">
+          <span class="player-chip badge rounded-pill">🔔 {{ bellsRung }} sonnerie{{ bellsRung !== 1 ? 's' : '' }}</span>
+          <span v-if="theme.musicAssetId" class="player-chip badge rounded-pill">🎵 Musique active</span>
         </div>
 
         <!-- Contrôles -->
-        <div class="session-player__controls">
-          <button class="session-player__btn session-player__btn--stop" @click="stop">
+        <div class="d-flex align-items-center gap-4">
+          <button class="btn-stop btn border-0 rounded-circle d-flex align-items-center justify-content-center" @click="stop">
             ⏹
           </button>
-          <button class="session-player__btn session-player__btn--play" @click="togglePlay">
+          <button class="btn-play btn btn-primary rounded-circle d-flex align-items-center justify-content-center" @click="togglePlay">
             {{ isPlaying ? '⏸' : '▶' }}
           </button>
         </div>
@@ -76,12 +75,16 @@
     </main>
 
     <!-- Fin de séance -->
-    <div v-if="sessionEnded" class="session-player__end-overlay">
-      <div class="session-player__end-card">
-        <div class="session-player__end-icon">✨</div>
-        <p class="session-player__end-title">Séance terminée</p>
-        <p class="session-player__end-sub">Durée : {{ formatTime(totalDuration) }}</p>
-        <button class="session-player__end-btn" @click="router.back()">
+    <div
+      v-if="sessionEnded"
+      class="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+      style="background: rgba(0,0,0,0.55); z-index: 50"
+    >
+      <div class="card border-0 rounded-3 p-4 text-center d-flex flex-column align-items-center gap-3" style="max-width: 300px; width: 90%">
+        <div style="font-size: 3rem">✨</div>
+        <p class="h5 fw-bold text-secondary mb-0">Séance terminée</p>
+        <p class="text-muted small mb-0">Durée : {{ formatTime(totalDuration) }}</p>
+        <button class="btn btn-primary rounded-pill fw-bold px-4 py-2" @click="router.back()">
           Retour aux thèmes
         </button>
       </div>
@@ -90,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { Filesystem, Directory } from '@capacitor/filesystem'
 import { useThemesStore } from '../../stores/themes'
@@ -257,4 +260,105 @@ function formatTime(seconds: number): string {
 }
 </script>
 
-<style src="../../scss/views/music/session-player.scss" scoped lang="scss" />
+<style scoped lang="scss">
+.session-player {
+  background: linear-gradient(160deg, #f0fdf4 0%, #dcfce7 60%, #bbf7d0 100%);
+}
+
+// Pulse ring animation
+.pulse-ring {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulse-wave {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid $color-primary;
+  opacity: 0;
+
+  &--active {
+    animation: player-pulse 2s ease-out infinite;
+  }
+
+  &:nth-child(2) { animation-delay: 0.66s; }
+  &:nth-child(3) { animation-delay: 1.33s; }
+}
+
+.pulse-center {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: $color-primary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 4px 20px rgba($color-primary, 0.4);
+  transition: transform 0.1s ease;
+  position: relative;
+  z-index: 1;
+
+  &--bell {
+    animation: player-bell-ring 0.5s ease;
+  }
+}
+
+// Timer
+.timer-elapsed {
+  font-family: 'Bona Nova', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: $color-secondary;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+// Info chips
+.player-chip {
+  background: rgba(255, 255, 255, 0.7);
+  color: #166534;
+  backdrop-filter: blur(4px);
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+// Control buttons
+.btn-play {
+  width: 72px;
+  height: 72px;
+  font-size: 1.75rem;
+  box-shadow: 0 4px 16px rgba($color-primary, 0.45);
+
+  &:active { transform: scale(0.93); }
+}
+
+.btn-stop {
+  width: 52px;
+  height: 52px;
+  background: #fff;
+  color: #dc2626;
+  font-size: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &:hover { background: #fef2f2; }
+  &:active { transform: scale(0.93); }
+}
+
+@keyframes player-pulse {
+  0%   { transform: scale(1);   opacity: 0.6; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+@keyframes player-bell-ring {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.2); }
+  60%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+</style>

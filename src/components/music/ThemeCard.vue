@@ -1,35 +1,33 @@
 <template>
-  <div class="theme-card">
-    <div class="theme-card__header">
-      <div class="theme-card__info">
-        <h3 class="theme-card__name">{{ theme.name }}</h3>
-        <div class="theme-card__meta">
-          <span class="theme-card__tag">🔔 {{ store.getBellLabel(theme) }}</span>
-          <span class="theme-card__tag">⏱ {{ store.getIntervalLabel(theme) }}</span>
-          <span class="theme-card__tag">🕐 {{ theme.sessionDurationMinutes }} min</span>
-          <span v-if="theme.musicAssetId" class="theme-card__tag">🎵 Musique</span>
-        </div>
+  <div class="card border-0 shadow-sm overflow-hidden theme-card">
+    <div class="card-body p-3 border-bottom">
+      <h3 class="fw-bold mb-2 theme-card__name">{{ theme.name }}</h3>
+      <div class="d-flex flex-wrap gap-1">
+        <span class="badge rounded-pill theme-tag">🔔 {{ store.getBellLabel(theme) }}</span>
+        <span class="badge rounded-pill theme-tag">⏱ {{ store.getIntervalLabel(theme) }}</span>
+        <span class="badge rounded-pill theme-tag">🕐 {{ theme.sessionDurationMinutes }} min</span>
+        <span v-if="theme.musicAssetId" class="badge rounded-pill theme-tag">🎵 Musique</span>
       </div>
     </div>
 
-    <div class="theme-card__audio">
-      <div v-if="theme.generatedAudioPath" class="theme-card__audio-ok">
-        <span class="theme-card__audio-icon">✅</span>
-        <div class="theme-card__audio-details">
+    <div class="px-3 py-2 border-bottom" style="background: #fafafa">
+      <div v-if="theme.generatedAudioPath" class="d-flex align-items-center gap-2">
+        <span>✅</span>
+        <div class="d-flex flex-column fw-semibold" style="gap: 1px; font-size: 0.875rem; color: #166534">
           <span>Audio généré</span>
-          <span class="theme-card__audio-size">{{ formattedSize }} · {{ formattedDate }}</span>
+          <span class="text-muted fw-normal" style="font-size: 0.75rem">{{ formattedSize }} · {{ formattedDate }}</span>
         </div>
       </div>
-      <div v-else class="theme-card__audio-missing">
-        <span class="theme-card__audio-icon">⚠️</span>
+      <div v-else class="d-flex align-items-center gap-2 small" style="color: #92400e">
+        <span>⚠️</span>
         <span>Audio non généré</span>
       </div>
     </div>
 
-    <div class="theme-card__actions">
+    <div class="d-flex align-items-center gap-2 px-3 py-2">
       <button
         v-if="theme.generatedAudioPath"
-        class="theme-card__btn theme-card__btn--play"
+        class="btn btn-secondary btn-sm flex-grow-1"
         :disabled="isGenerating"
         @click="emit('play', theme.id)"
       >
@@ -37,23 +35,23 @@
       </button>
 
       <button
-        class="theme-card__btn theme-card__btn--generate"
+        class="btn btn-primary btn-sm"
         :disabled="isGenerating"
         @click="emit('generate', theme.id)"
       >
         <span v-if="isGenerating">
-          <span class="theme-card__spinner" /> {{ generateProgress }}%
+          <span class="spinner-custom" /> {{ generateProgress }}%
         </span>
         <span v-else>
           {{ theme.generatedAudioPath ? '↺' : '⚡ Générer' }}
         </span>
       </button>
 
-      <button class="theme-card__btn theme-card__btn--edit" @click="emit('edit', theme.id)">
+      <button class="btn btn-light btn-sm" @click="emit('edit', theme.id)">
         ✏️
       </button>
 
-      <button class="theme-card__btn theme-card__btn--delete" @click="emit('delete', theme.id)">
+      <button class="btn btn-sm theme-btn-delete" @click="emit('delete', theme.id)">
         🗑
       </button>
     </div>
@@ -96,4 +94,45 @@ const formattedDate = computed(() => {
 })
 </script>
 
-<style src="../../scss/components/music/theme-card.scss" scoped lang="scss" />
+<style scoped lang="scss">
+.theme-card {
+  border-left: 4px solid $color-primary !important;
+  border-radius: 16px !important;
+}
+
+.theme-card__name {
+  font-size: 1.1rem;
+  color: $color-secondary;
+  margin-bottom: 0.5rem;
+}
+
+.theme-tag {
+  background: #f0fdf4;
+  color: #166534;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.theme-btn-delete {
+  background: #fef2f2;
+  color: #dc2626;
+
+  &:hover { background: #fee2e2; }
+}
+
+.spinner-custom {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: theme-card-spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
+@keyframes theme-card-spin {
+  to { transform: rotate(360deg); }
+}
+</style>
